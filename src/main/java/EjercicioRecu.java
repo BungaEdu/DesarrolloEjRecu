@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class EjercicioRecu {
 
     // TODO Completa todas las funciones que aparecen en este fichero.
@@ -8,8 +10,14 @@ public class EjercicioRecu {
         gestorDePersonas = ObtenerPersonasRequest.Companion.get();
     }
 
+    public Persona[] quitarNulos(Persona[] pers, int i) {
+        return Arrays.copyOf(pers, i);
+    }
+
+
     /**
      * Devuelve todas las personas que viven en España : location - city.
+     *
      * @return Devuelve todas las personas que viven en España : location - city.
      */
     public Persona[] personasQueVivenEnSpain() {
@@ -31,8 +39,20 @@ public class EjercicioRecu {
      */
     public Persona personaMasVieja() {
         // TODO 1p
-        return gestorDePersonas.getPersonas()[0];
+        Persona[] pers = new Persona[gestorDePersonas.getPersonas().length];
+        long edad = 0, aux = 0;
+        int j=0, i=0;
+        for (Persona x : gestorDePersonas.getPersonas()) {
+            edad = x.getDob().getAge();
+            i++;
+            if (edad > aux) {
+                j = i;
+                aux = edad;
+            }
+        }
+        return gestorDePersonas.getPersonas()[j-1];
     }
+
 
 
     /**

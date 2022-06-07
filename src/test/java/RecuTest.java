@@ -5,7 +5,7 @@ public class RecuTest {
 
 
     Examen examen = new Examen();
-
+    EjercicioRecu recu = new EjercicioRecu();
     // TIP:
     // Para obtener la lista de personas:
     //      examen.personas.getResults()
@@ -18,10 +18,47 @@ public class RecuTest {
     //  Si la "nat" es "IE" pero no vive en "Ireland", deberá devolver ErrorEnNacionalidadException
     //  Asegurate que el 100% de pasar el test sobre el 100% de las personas disponibles.
     //  esIrlandes deberá devolver "true" si es irlandés. En caso contrario, "false"
-    @Test
+
+    /*@Test
     public void testEsIrlandes_XXX() {
         // TODO 3p
+    }*/
 
+    @Test
+    public void testEsIrlandes_persNull() {
+        Assertions.assertThrows(PersonaNulaException.class, () -> PersonasFun.Companion.esIrlandes(null));
+        // TODO 3p
+    }
+
+    @Test
+    public void testEsIrlandes_Nacionalidad1() {
+        Persona p = examen.gestorDePersonas.getPersonas()[1];
+        p.setNat("Prueba");
+        p.getLocation().setCountry("Ireland");
+        Assertions.assertThrows(ErrorEnNacionalidadException.class, () -> PersonasFun.Companion.esIrlandes(p));
+    }
+
+    @Test
+    public void testEsIrlandes_Nacionalidad2() {
+        Persona p = examen.gestorDePersonas.getPersonas()[2];
+        p.setNat("IE");
+        p.getLocation().setCountry("Norway");
+        Assertions.assertThrows(ErrorEnNacionalidadException.class, () -> PersonasFun.Companion.esIrlandes(p));
+    }
+
+    @Test
+    public void testEsIrlandes_Nacionalidad3() {
+        Persona p = examen.gestorDePersonas.getPersonas()[3];
+        p.getLocation().setCountry("Ireland");
+        Assertions.assertTrue(PersonasFun.Companion.esIrlandes(p));
+    }
+
+
+    @Test
+    public void masViejo () {
+        Persona esperado = examen.gestorDePersonas.getPersonas()[4];
+        Persona actual = recu.personaMasVieja();
+        Assertions.assertEquals(esperado,actual);
     }
 
 }
